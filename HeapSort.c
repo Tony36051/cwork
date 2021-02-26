@@ -14,12 +14,12 @@ void buildMinHeap(SDataType *a, int n, int i)
     int smallest = i;
     int l = 2 * i + 1;
     int r = 2 * i + 2;
-    /* 左子树小于根节点 */
+    // 从左子树、右子树和根找出最小的
     if (l < n && a[l].totalcount < a[smallest].totalcount)
         smallest = l;
     if (r < n && a[r].totalcount < a[smallest].totalcount)
         smallest = r;
-    if (smallest != i)
+    if (smallest != i) // 如果子树小于根
     {
         swapInArray(a, i, smallest);
         buildMinHeap(a, n, smallest);
@@ -29,15 +29,9 @@ void buildMinHeap(SDataType *a, int n, int i)
 void heapSort(PNode pList)
 {
     int n = listLen(pList);
-    SDataType *a = malloc(sizeof(SDataType) * n);
+    SDataType *a = toArray(pList);
+    
     int i;
-    PNode p = pList;
-    for (i = 0; i < n; i++)
-    {
-        a[i] = p->_PNext->_data;
-        p = p->_PNext;
-    }
-    p = pList;
     for (i = n / 2 - 1; i >= 0; i--)
     {
         buildMinHeap(a, n, i);
@@ -48,6 +42,8 @@ void heapSort(PNode pList)
         swapInArray(a, 0, i);
         buildMinHeap(a, i, 0);
     }
+    
+    PNode p = pList;
     for (i = 0; i < n; i++)
     {
         p->_PNext->_data = a[i];

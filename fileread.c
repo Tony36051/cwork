@@ -6,6 +6,7 @@
 #define MAX_LINE 1024
 const int MAXS = 1 * 1024 * 1024;
 
+
 void cutStr(char *str, char c)
 {
     int N = strlen(str);
@@ -34,11 +35,11 @@ void read(char *fileName, PNode pList)
         ret = fgets(strLine, MAX_LINE, fp); //将fp所指向的文件一行内容读到strLine缓冲区
         if (ret == NULL)
             break; // 正确地退出
-        cutStr(strLine, ',');
+        cutStr(strLine, ','); // 将逗号改成\0，方便后续使用strcpy
         SDataType *userLogin = (SDataType *)malloc(sizeof(SDataType));
         strcpy(userLogin->name, strLine);
         userLogin->totalcount = 1;
-        addNode(pList, *userLogin);
+        addNode(pList, userLogin);
     }
     // travelList(pList);
     fclose(fp); //关闭文件

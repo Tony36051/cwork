@@ -5,8 +5,8 @@ PNode partiion(PNode pStart, PNode pEnd)
 {
 
     PNode key = pStart; // 基准
-    PNode p = pStart;
-    PNode q = pStart;
+    PNode p = pStart;   // 基准应该的位置
+    PNode q = pStart;   // 扫描的指针
     while (q != pEnd)
     {
         if (q->_data.totalcount > key->_data.totalcount)
@@ -24,11 +24,9 @@ void quickSort1(PNode pList, PNode pStart, PNode pEnd)
 {
     if (pStart == pEnd || pStart->_PNext == pEnd)
         return;
-    PNode mid = partiion(pStart, pEnd);
-    // printf("mid:%s\n", mid->_data.name);
-    // travelList(pList);
-    quickSort1(pList, pStart, mid);
-    quickSort1(pList, mid->_PNext, pEnd);
+    PNode mid = partiion(pStart, pEnd);   // 划分两块
+    quickSort1(pList, pStart, mid);       // 分治左侧
+    quickSort1(pList, mid->_PNext, pEnd); // 分治右侧
 }
 
 void quickSort(PNode pList)

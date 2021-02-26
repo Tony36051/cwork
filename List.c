@@ -10,10 +10,10 @@ PNode createList()
     return pNode;
 }
 
-void addNode(PNode pList, SDataType user_login)
+void addNode(PNode pList, SDataType *user_login)
 {
     PNode pNode = (PNode)malloc(sizeof(Node));
-    pNode->_data = user_login;
+    pNode->_data = *user_login;
     pNode->_PNext = pList->_PNext;
     pList->_PNext = pNode;
 }
