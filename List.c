@@ -42,13 +42,24 @@ void swapData(PNode pList, PNode p, PNode q)
     // travelList(pList);
 }
 
+void deleteNode(PNode p)
+{
+    if (p == NULL || p->_PNext == NULL)
+    {
+        return;
+    }
+    PNode r = p->_PNext;
+    p->_PNext = r->_PNext;
+    free(r);
+}
+
 /*
 建立三个工作指针p,q,r，然后p遍历全表。
 p每到一个结点，q就从这个结点往后遍历，并与p的数值比较，相同的话就free掉那个结点
 */
 void merge(PNode pList)
 {
-    PNode p, q, r;
+    PNode p, q;
     p = pList->_PNext;
     while (p)
     {
@@ -57,10 +68,8 @@ void merge(PNode pList)
         {
             if (strcmp(p->_data.name, q->_PNext->_data.name) == 0)
             {
-                r = q->_PNext;
-                q->_PNext = r->_PNext;
+                deleteNode(q);
                 p->_data.totalcount++;
-                free(r);
             }
             else
             {
@@ -71,10 +80,18 @@ void merge(PNode pList)
     }
 }
 
+void deleteList(PNode pList)
+{
+    PNode p = pList;
+    while (p->_PNext)
+    {
+        deleteNode(p);
+    }
+}
+
 int listLen(PNode pList)
 {
-    int cnt=0;
-   
+    int cnt = 0;
     PNode tmp = pList;
     while (tmp->_PNext)
     {
@@ -82,10 +99,9 @@ int listLen(PNode pList)
         tmp = tmp->_PNext;
     }
     return cnt;
-
 }
 
-SDataType* toArray(PNode pList)
+SDataType *toArray(PNode pList)
 {
     int n = listLen(pList);
     SDataType *a = malloc(sizeof(SDataType) * n);
